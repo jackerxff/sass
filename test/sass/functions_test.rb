@@ -1147,6 +1147,12 @@ MSG
     assert_equal("1px", evaluate("if(true, 1px, 2px)"))
     assert_equal("2px", evaluate("if(false, 1px, 2px)"))
     assert_equal("2px", evaluate("if(null, 1px, 2px)"))
+    assert_equal("1px", evaluate("if(true, 1px, $invalid)"))
+    assert_equal("2px", evaluate("if(false, $invalid, 2px)"))
+    assert_equal("1px", evaluate("if(true, $if-true: 1px, $if-false: 2px)"))
+    assert_equal("2px", evaluate("if(false, $if-true: 1px, $if-false: 2px)"))
+    assert_equal("2px", evaluate("if($condition: false, $if-true: 1px, $if-false: 2px)"))
+    assert_error_message("Cannot use ... with if()", "if($foo...)")
   end
 
   def test_counter
